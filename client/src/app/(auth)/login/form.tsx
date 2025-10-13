@@ -1,0 +1,75 @@
+"use client";
+import { loginUserAction } from "@/action/auth";
+import { TextInputField } from "@/components/common/form";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Response } from "@/types/actions";
+import { LoginFormData } from "@/types/form-schema/auth/login";
+import { UserInterface } from "@/types/user";
+import { CheckCircle2 } from "lucide-react";
+import { useActionState } from "react";
+
+const initialState: Response<UserInterface> & { inputs: LoginFormData } = {
+  inputs: {
+    email: "",
+    password: "",
+  },
+  error: "",
+  message: "",
+};
+
+export const LoginForm = () => {
+  const [state, action, isPending] = useActionState(
+    loginUserAction,
+    initialState
+  );
+
+  return (
+    <div className="w-1/3 p-5 rounded-lg flex flex-col gap-4">
+      <div className="flex flex-col">
+        <span className="text-lg font-bold">Login</span>
+        <span className="text-sm text-gray-500">
+          Welcome back! - Please sign in to continue
+        </span>
+      </div>
+      <form action={action} className="flex flex-col gap-4">
+        <TextInputField
+          id="email"
+          name="email"
+          label="Email"
+          required={true}
+          placeholder="name@example.com"
+        />
+        <TextInputField
+          id="password"
+          type="password"
+          label="Password"
+          name="password"
+          placeholder="••••••••"
+          required={true}
+        />
+        {"error" in state && state.error && (
+          <Alert variant="destructive">
+            <AlertDescription>
+              {Array.isArray(state.error)
+                ? state.error.join(", ")
+                : state.error}
+            </AlertDescription>
+          </Alert>
+        )}
+        <Button
+          className="bg-secondary hover:bg-secondary hover:opacity-80"
+          type="submit"
+        >
+          Login
+        </Button>
+      </form>
+      <div className="w-full flex flex-col text-sm gap-1 items-center [&_button]:font-medium [&_button]:text-secondary">
+        <span>
+          Don&apos;t have an account? <button>Register here</button>
+        </span>
+        <button>Reset Password</button>
+      </div>
+    </div>
+  );
+};
