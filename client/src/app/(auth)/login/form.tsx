@@ -7,6 +7,7 @@ import { Response } from "@/types/actions";
 import { LoginFormData } from "@/types/form-schema/auth/login";
 import { UserInterface } from "@/types/user";
 import { CheckCircle2 } from "lucide-react";
+import Link from "next/link";
 import { useActionState } from "react";
 
 const initialState: Response<UserInterface> & { inputs: LoginFormData } = {
@@ -64,11 +65,16 @@ export const LoginForm = () => {
           Login
         </Button>
       </form>
-      <div className="w-full flex flex-col text-sm gap-1 items-center [&_button]:font-medium [&_button]:text-secondary">
+      <div className="w-full flex flex-col text-sm gap-1 items-center">
         <span>
-          Don&apos;t have an account? <button>Register here</button>
+          Don&apos;t have an account?{" "}
+          <Link className="font-medium text-secondary" href={"/register"}>
+            Register here
+          </Link>
         </span>
-        <button>Reset Password</button>
+        <Link className="font-medium text-secondary" href="/forgot-password">
+          Reset Password
+        </Link>
       </div>
     </div>
   );
