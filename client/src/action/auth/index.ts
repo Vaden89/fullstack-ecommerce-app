@@ -17,6 +17,7 @@ import {
 } from "@/types/form-schema/auth/register";
 import { UserInterface } from "@/types/user";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { redirect } from "next/navigation";
 import z from "zod";
 
 export const loginUserAction = async (_: any, formData: FormData) => {
@@ -33,7 +34,7 @@ export const loginUserAction = async (_: any, formData: FormData) => {
 
     if (!validatedData.success) {
       const messages = collectErrorMessages(
-        z.treeifyError(validatedData.error)
+        z.treeifyError(validatedData.error),
       );
 
       return {
@@ -105,7 +106,7 @@ export const registerUserAction = async (_: any, formData: FormData) => {
 
     if (!validatedData.success) {
       const messages = collectErrorMessages(
-        z.treeifyError(validatedData.error)
+        z.treeifyError(validatedData.error),
       );
 
       return {
@@ -137,7 +138,7 @@ const registerUser = async (payload: {
 }) => {
   const response = await axiosPost<SuccessResponse<{ user: UserInterface }>>(
     "/auth/register",
-    payload
+    payload,
   );
 
   if (!("data" in response)) {
@@ -158,7 +159,7 @@ export const reqPasswordResetAction = async (_: any, formData: FormData) => {
 
     if (!validatedData.success) {
       const messages = collectErrorMessages(
-        z.treeifyError(validatedData.error)
+        z.treeifyError(validatedData.error),
       );
 
       return {
@@ -170,7 +171,12 @@ export const reqPasswordResetAction = async (_: any, formData: FormData) => {
 
     const response = await reqPasswordReset(validatedData.data);
 
-    if (!("data" in response)) throw new Error("Something went wrong");
+    if (!("data" in response)) {
+      return {
+        ...response,
+        inputs: rawData,
+      } as ErrorResponse & { inputs: ReqPasswordResetData };
+    }
 
     return {
       inputs: rawData,
@@ -189,7 +195,7 @@ export const reqPasswordResetAction = async (_: any, formData: FormData) => {
 const reqPasswordReset = async (payload: ReqPasswordResetData) => {
   const response = await axiosPost<SuccessResponse<null>>(
     "/auth/req-password-reset",
-    payload
+    payload,
   );
 
   if (!("data" in response)) {
@@ -200,14 +206,18 @@ const reqPasswordReset = async (payload: ReqPasswordResetData) => {
 
 export const forgotPasswordAction = async (_: any, formData: FormData) => {
   let rawData: ForgotPasswordFormData | null = null;
+
   try {
-    rawData = { email: formData.get("email") as string };
+    rawData = {
+      password: formData.get("password") as string,
+      confirm_password: formData.get("confirm_password") as string,
+    };
 
     const validatedData = forgotPasswordFormSchema.safeParse(rawData);
 
     if (!validatedData.success) {
       const messages = collectErrorMessages(
-        z.treeifyError(validatedData.error)
+        z.treeifyError(validatedData.error),
       );
 
       return {
@@ -218,6 +228,20 @@ export const forgotPasswordAction = async (_: any, formData: FormData) => {
     }
 
     const response = await forgotPassword(validatedData.data);
+
+    if (!("data" in response)) {
+      return {
+        inputs: rawData,
+        ...response,
+      } as ErrorResponse & { inputs: ForgotPasswordFormData };
+    }
+    redirect("/login?message=Password+reset+successfully");
+
+    return {
+      inputs: rawData,
+      message: "Password reset successfully",
+      data: null,
+    };
   } catch (error) {
     return {
       inputs: rawData,
@@ -229,6 +253,12 @@ export const forgotPasswordAction = async (_: any, formData: FormData) => {
 
 const forgotPassword = async (payload: ForgotPasswordFormData) => {
   const response = await axiosPost<SuccessResponse<null>>(
-    "/auth/reset-password"
+    "/auth/reset-password",
   );
+
+  if (!("data" in response)) {
+    return response as ErrorResponse;
+  }
+
+  return response;
 };

@@ -1,5 +1,5 @@
 "use client";
-import { reqPasswordResetAction } from "@/action/auth";
+import { forgotPasswordAction, reqPasswordResetAction } from "@/action/auth";
 import { CustomButton } from "@/components/common/button";
 import { TextInputField } from "@/components/common/form";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -17,7 +17,7 @@ export const ForgotPasswordForm = () => {
 
   const [state, action, isPending] = useActionState(
     reqPasswordResetAction,
-    initialState
+    initialState,
   );
 
   return (
@@ -63,6 +63,59 @@ export const ForgotPasswordForm = () => {
           </Link>
         </span>
       </div>
+    </form>
+  );
+};
+
+export const ResetPasswordForm = () => {
+  const initialState = {
+    inputs: {
+      password: "",
+      confirm_password: "",
+    },
+    error: "",
+    message: "",
+  };
+
+  const [state, action, isPending] = useActionState(
+    forgotPasswordAction,
+    initialState,
+  );
+
+  return (
+    <form action={action}>
+      <div className="flex flex-col">
+        <span>Reset Password</span>
+        <p className="text-sm text-gray-500">Enter your new password details</p>
+      </div>
+
+      <TextInputField
+        id="password"
+        type="password"
+        name="password"
+        label="New Password"
+        placeholder="Enter new password"
+      />
+
+      <TextInputField
+        id="confirm_password"
+        type="password"
+        name="confirm_password"
+        label="Confirm Password"
+        placeholder="Confirm new password"
+      />
+
+      {"error" in state && state.error && (
+        <Alert variant="destructive">
+          <AlertDescription>
+            {Array.isArray(state.error) ? state.error.join(", ") : state.error}
+          </AlertDescription>
+        </Alert>
+      )}
+
+      <CustomButton loading={isPending} type="submit" className="w-full">
+        Submit
+      </CustomButton>
     </form>
   );
 };
