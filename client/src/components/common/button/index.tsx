@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Spinner } from "../Spinner";
 
-interface CustomButtonProps {
+interface CustomButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
@@ -16,6 +17,7 @@ export const CustomButton = ({
   disabled,
   loading,
   onClick,
+  type,
 }: CustomButtonProps) => {
   const styling = cn(
     "bg-secondary hover:bg-secondary hover:opacity-80 flex gap-2",
@@ -24,6 +26,7 @@ export const CustomButton = ({
 
   return (
     <Button
+      type={type}
       onClick={onClick}
       className={styling}
       disabled={disabled || loading}

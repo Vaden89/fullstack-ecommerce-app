@@ -6,6 +6,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Response } from "@/types/actions";
 import { RegisterFormData } from "@/types/form-schema/auth/register";
 import { UserInterface } from "@/types/user";
+import { CheckCircle2 } from "lucide-react";
+import Link from "next/link";
 import { useActionState } from "react";
 
 export const RegisterForm = () => {
@@ -22,7 +24,7 @@ export const RegisterForm = () => {
 
   const [state, action, isPending] = useActionState(
     registerUserAction,
-    initialState
+    initialState,
   );
 
   return (
@@ -76,14 +78,28 @@ export const RegisterForm = () => {
           </Alert>
         )}
 
+        {"data" in state && state.data && (
+          <Alert variant="default" className="text-green-600 border-green-600">
+            <CheckCircle2 className="w-4 h-4" />
+            <AlertDescription className="text-green-600">
+              Account registered successfully, go login
+            </AlertDescription>
+          </Alert>
+        )}
+
         <CustomButton loading={isPending}>Register</CustomButton>
       </form>
 
-      <div className="w-full flex flex-col text-sm gap-1 items-center [&_button]:font-medium [&_button]:text-secondary">
+      <div className="w-full flex flex-col text-sm gap-1 items-center">
         <span>
-          Don&apos;t have an account? <button>Register here</button>
+          Already have an account?{" "}
+          <Link className="text-secondary font-medium" href={"/login"}>
+            Login here
+          </Link>
         </span>
-        <button>Reset Password</button>
+        <Link className="text-secondary font-medium" href={"/forgot-password"}>
+          Reset Password
+        </Link>
       </div>
     </div>
   );

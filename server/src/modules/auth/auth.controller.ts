@@ -49,6 +49,7 @@ export class AuthController {
 
     return {
       success: true,
+      data: null,
       message: 'Reset link sent to your email',
     };
   }
