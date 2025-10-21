@@ -254,6 +254,7 @@ export const forgotPasswordAction = async (_: any, formData: FormData) => {
 const forgotPassword = async (payload: ForgotPasswordFormData) => {
   const response = await axiosPost<SuccessResponse<null>>(
     "/auth/reset-password",
+    payload,
   );
 
   if (!("data" in response)) {

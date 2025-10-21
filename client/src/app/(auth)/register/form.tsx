@@ -24,7 +24,7 @@ export const RegisterForm = () => {
 
   const [state, action, isPending] = useActionState(
     registerUserAction,
-    initialState
+    initialState,
   );
 
   return (
@@ -90,7 +90,7 @@ export const RegisterForm = () => {
         <CustomButton loading={isPending}>Register</CustomButton>
       </form>
 
-      <div className="w-full flex flex-col text-sm gap-1 items-center [&_Link]:font-medium [&_Link]:text-secondary">
+      <div className="w-full flex flex-col text-sm gap-1 items-center">
         <span>
           Already have an account?{" "}
           <Link className="text-secondary font-medium" href={"/login"}>

@@ -67,7 +67,7 @@ export const ForgotPasswordForm = () => {
   );
 };
 
-export const ResetPasswordForm = () => {
+export const ResetPasswordForm = ({ token }: { token: string }) => {
   const initialState = {
     inputs: {
       password: "",
