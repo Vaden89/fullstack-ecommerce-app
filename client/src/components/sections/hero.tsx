@@ -41,19 +41,25 @@ export const HeroSection = () => {
       </div>
       <div className="w-full h-[50vh] relative">
         <Image
-          src="/icons/black-star.svg"
-          width={100}
-          height={100}
-          alt=""
-          className="w-[76px] h-[76px] absolute right-5 top-10 "
+          src="/images/landing-img.jpg"
+          alt="Landing background"
+          fill
+          className="object-cover object-top "
+          priority
         />
-        <div className="w-full h-full landing-img" />
         <Image
           src="/icons/black-star.svg"
           width={100}
           height={100}
           alt=""
           className="w-[44px] h-[44px] absolute left-5 top-1/2 "
+        />
+        <Image
+          src="/icons/black-star.svg"
+          width={100}
+          height={100}
+          alt=""
+          className="w-[76px] h-[76px] absolute top-1/5 right-5"
         />
       </div>
     </div>

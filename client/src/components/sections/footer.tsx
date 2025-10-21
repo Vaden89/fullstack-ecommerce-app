@@ -6,7 +6,6 @@ import {
   LucideProps,
   TwitterIcon,
 } from "lucide-react";
-import Twitter from "next-auth/providers/twitter";
 
 export const Footer = () => {
   const columns = [

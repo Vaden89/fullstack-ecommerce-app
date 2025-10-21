@@ -9,10 +9,10 @@ export const TestimonialSection = () => {
           OUR HAPPY <br /> CUSTOMERS
         </span>
         <div className="flex items-center gap-4">
-          <button>
+          <button aria-label="Previous Testimonial">
             <ArrowLeft strokeWidth={3} />
           </button>
-          <button>
+          <button aria-label="Next Testimonial">
             <ArrowRight strokeWidth={3} />
           </button>
         </div>

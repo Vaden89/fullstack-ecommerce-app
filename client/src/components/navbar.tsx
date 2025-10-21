@@ -5,7 +5,7 @@ export const Navbar = () => {
   return (
     <div className="w-full h-20 flex items-center justify-between p-4 bg-white">
       <div className="flex gap-2 items-center">
-        <button>
+        <button aria-label="Open Menu">
           <Menu className="w-[24px] h-[24px]" />
         </button>
         <Link href={"/"}>
@@ -13,13 +13,13 @@ export const Navbar = () => {
         </Link>
       </div>
       <div className="flex gap-3 items-center">
-        <button>
+        <button aria-label="Search">
           <Search className="w-[24px] h-[24px]" strokeWidth={2.5} />
         </button>
-        <button>
+        <button aria-label="View Shopping Cart">
           <ShoppingCart strokeWidth={2.5} className="w-[24px] h-[24px]" />
         </button>
-        <button>
+        <button aria-label="View User Profile">
           <CircleUserRound strokeWidth={2.5} className="w-[24px] h-[24px]" />
         </button>
       </div>
