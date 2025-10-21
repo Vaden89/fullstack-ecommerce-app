@@ -2,6 +2,7 @@ import Image from "next/image";
 import { DiscountBanner } from "../discount-banner";
 import { Navbar } from "../navbar";
 import { Button } from "../ui/button";
+import "@/app/globals.css";
 
 export const HeroSection = () => {
   return (
