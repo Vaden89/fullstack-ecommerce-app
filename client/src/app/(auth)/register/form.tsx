@@ -28,7 +28,7 @@ export const RegisterForm = () => {
   );
 
   return (
-    <div className="w-1/3 p-5 flex flex-col gap-4">
+    <div className="w-full sm:w-1/3 p-5 flex flex-col gap-4">
       <div className="flex flex-col">
         <span className="text-lg font-bold">Create an account</span>
         <span className="text-sm text-gray-500">
