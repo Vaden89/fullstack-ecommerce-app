@@ -31,32 +31,35 @@ export const TextInputField = ({
   iconPosition,
 }: TextInputFieldProps) => {
   const styling = cn(
+    "form-input px-4 bg-input h-10 rounded-md px-4 text-foreground placeholder:text-muted-foreground",
+    `${iconPosition === "left" ? "pl-10" : iconPosition === "right" ? "pr-10" : ""}`,
     className,
-    "form-input px-4 focus:border-blue-500 focus:ring-blue-500 focus-visible:ring-accent"
   );
   const Icon = icon as LucideIcon;
 
   return (
     <FormField htmlFor={id} label={label} required={required}>
-      {icon && iconPosition === "left" && (
-        <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          <Icon className="w-5 h-5 text-gray-500" />
-        </span>
-      )}
-      <input
-        id={id}
-        name={name}
-        type={type}
-        disabled={readonly}
-        className={styling}
-        placeholder={placeholder}
-        defaultValue={defaultValue}
-      />
-      {icon && iconPosition === "right" && (
-        <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-          <Icon className="w-5 h-5 text-gray-500" />
-        </span>
-      )}
+      <div className="w-full relative">
+        {icon && iconPosition === "left" && (
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <Icon className="w-5 h-5 text-gray-500" />
+          </span>
+        )}
+        <input
+          id={id}
+          name={name}
+          type={type}
+          disabled={readonly}
+          className={styling}
+          placeholder={placeholder}
+          defaultValue={defaultValue}
+        />
+        {icon && iconPosition === "right" && (
+          <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+            <Icon className="w-5 h-5 text-gray-500" />
+          </span>
+        )}
+      </div>
     </FormField>
   );
 };
