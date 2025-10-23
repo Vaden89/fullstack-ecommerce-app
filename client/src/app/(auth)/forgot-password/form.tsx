@@ -21,7 +21,7 @@ export const ForgotPasswordForm = () => {
   );
 
   return (
-    <form action={action} className="w-1/3 p-5 flex flex-col gap-4">
+    <form action={action} className="w-full sm:w-1/3 p-5 flex flex-col gap-4">
       <div className="flex flex-col">
         <span className="text-lg font-semibold">Request password reset</span>
         <p className="text-sm text-gray-400">
@@ -31,8 +31,9 @@ export const ForgotPasswordForm = () => {
       </div>
       <TextInputField
         id="email"
-        label="Email Address"
         name="email"
+        className="w-full"
+        label="Email Address"
         placeholder="name@example.com"
       />
       {"data" in state && (
@@ -67,7 +68,7 @@ export const ForgotPasswordForm = () => {
   );
 };
 
-export const ResetPasswordForm = ({ token }: { token: string }) => {
+export const ResetPasswordForm = ({ token }: { token: string | null }) => {
   const initialState = {
     inputs: {
       password: "",
@@ -83,7 +84,7 @@ export const ResetPasswordForm = ({ token }: { token: string }) => {
   );
 
   return (
-    <form action={action}>
+    <form className="w-full sm:w-1/3 flex flex-col gap-4 p-5" action={action}>
       <div className="flex flex-col">
         <span>Reset Password</span>
         <p className="text-sm text-gray-500">Enter your new password details</p>

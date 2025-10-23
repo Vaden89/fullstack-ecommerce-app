@@ -31,7 +31,7 @@ export const TextInputField = ({
   iconPosition,
 }: TextInputFieldProps) => {
   const styling = cn(
-    "form-input px-4 bg-input h-10 rounded-md px-4 text-foreground placeholder:text-muted-foreground",
+    "form-input px-4 bg-input h-10 rounded-md px-4 text-foreground placeholder:text-muted-foreground w-full",
     `${iconPosition === "left" ? "pl-10" : iconPosition === "right" ? "pr-10" : ""}`,
     className,
   );
