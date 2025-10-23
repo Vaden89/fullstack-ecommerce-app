@@ -68,7 +68,7 @@ export const ForgotPasswordForm = () => {
   );
 };
 
-export const ResetPasswordForm = ({ token }: { token: string }) => {
+export const ResetPasswordForm = ({ token }: { token: string | null }) => {
   const initialState = {
     inputs: {
       password: "",
@@ -84,7 +84,7 @@ export const ResetPasswordForm = ({ token }: { token: string }) => {
   );
 
   return (
-    <form action={action}>
+    <form className="w-full sm:w-1/3 flex flex-col gap-4 p-5" action={action}>
       <div className="flex flex-col">
         <span>Reset Password</span>
         <p className="text-sm text-gray-500">Enter your new password details</p>
