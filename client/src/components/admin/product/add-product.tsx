@@ -15,7 +15,7 @@ import { AddProductFormData } from "@/types/form-schema/product/add-product";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export const AddProductBtn = () => {
-  const initalState: Response<null> & { inputs: AddProductFormData } = {
+  const initialState: Response<null> & { inputs: AddProductFormData } = {
     inputs: {
       name: "",
       price: 0,
@@ -30,7 +30,7 @@ export const AddProductBtn = () => {
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [state, action, isPending] = useActionState(
     createProductAction,
-    initalState,
+    initialState,
   );
 
   useEffect(() => {
@@ -59,13 +59,10 @@ export const AddProductBtn = () => {
   return (
     <CustomModal
       maxWidth="3xl"
+      loading={isPending}
       title="Create Product"
       handleSubmit={handleSubmit}
-      trigger={
-        <CustomButton icon={Plus} onClick={() => setIsModalOpen(true)}>
-          Add Product
-        </CustomButton>
-      }
+      trigger={<CustomButton icon={Plus}>Add Product</CustomButton>}
     >
       <div className="w-full flex flex-col gap-3 my-3">
         {!("data" in state) && state.error && (

@@ -10,6 +10,7 @@ import {
   SidebarMenuItem,
 } from "./ui/sidebar";
 import { LucideIcon } from "lucide-react";
+import Link from "next/link";
 
 export const AppSideBar = () => {
   return (
@@ -28,12 +29,12 @@ export const AppSideBar = () => {
               return (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Link href={item.url}>
                       <Icon className="!size-4" />
                       <span className="text-base font-medium">
                         {item.title}
                       </span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               );

@@ -1,10 +1,7 @@
 "use client";
-
-import { CustomButton } from "@/components/common/button";
-import { usePage } from "@/contexts/admin-page-provider";
-import { Plus } from "lucide-react";
 import { useEffect } from "react";
 import { ProductTable } from "./table";
+import { usePage } from "@/contexts/admin-page-provider";
 import { AddProductBtn } from "@/components/admin/product/add-product";
 
 export default function AdminProductsPage() {

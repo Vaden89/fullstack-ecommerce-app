@@ -39,7 +39,9 @@ export const useProductColumns = (): ColumnDef<Product>[] => {
       cell: ({ row }) => (
         <button
           className="w-full text-center"
-          onClick={() => console.log(row.original)}
+          onClick={() => {
+            /* TODO: Implement edit action */
+          }}
         >
           Edit
         </button>

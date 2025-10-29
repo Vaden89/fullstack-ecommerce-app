@@ -59,7 +59,7 @@ export const createProductAction = async (_: any, formData: FormData) => {
     }
 
     const response = await createProduct({
-      ...validImageFiles,
+      ...validatedData.data,
       images: uploadedImageUrls,
     });
 
@@ -110,7 +110,7 @@ export const createProductAction = async (_: any, formData: FormData) => {
 };
 
 const createProduct = async (payload: any) => {
-  const url = "";
+  const url = "/products";
   const response = await axiosPost<SuccessResponse<null>>(url, payload);
 
   if (!("data" in response)) {

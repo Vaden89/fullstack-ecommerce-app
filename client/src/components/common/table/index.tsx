@@ -1,15 +1,19 @@
 import {
+  ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
-interface CustomTableProps {
-  data: any[];
-  columns: any[];
+interface CustomTableProps<TData> {
+  data: TData[];
+  columns: ColumnDef<TData>[];
 }
 
-export default function CustomTable({ data, columns }: CustomTableProps) {
+export default function CustomTable<TData>({
+  data,
+  columns,
+}: CustomTableProps<TData>) {
   const table = useReactTable({
     data: data,
     columns: columns,
