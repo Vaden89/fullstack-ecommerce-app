@@ -129,6 +129,10 @@ button {
     cursor: pointer;
 }
 
+li::marker {
+    content: "";
+}
+
 .form-input {
     &::placeholder {
         opacity: 1;
