@@ -28,7 +28,7 @@ export class RoleGuard implements CanActivate {
     if (!userRole) {
       throw new CustomHttpException(
         'User role is required',
-        HttpStatus.BAD_REQUEST,
+        HttpStatus.UNAUTHORIZED,
       );
     }
 

@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { User } from './entities/user.entity';
+import { User, UserRoles } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { CustomHttpException } from '~/helpers/custom.exception';
@@ -32,6 +32,7 @@ export class UserService {
       lastname: userDetails.lastname,
       email: userDetails.email,
       password: userDetails.password,
+      role: UserRoles.ADMIN,
     });
 
     return await this.userRepository.save(user);

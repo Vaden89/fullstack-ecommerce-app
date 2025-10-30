@@ -17,6 +17,8 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { MailModule } from './modules/mail/mail.module';
 import { BullModule } from '@nestjs/bullmq';
 import { ProductsModule } from './modules/products/products.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './guards/auth.guard';
 
 @Module({
   imports: [
@@ -152,6 +154,12 @@ import { ProductsModule } from './modules/products/products.module';
     ProductsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AppModule {}

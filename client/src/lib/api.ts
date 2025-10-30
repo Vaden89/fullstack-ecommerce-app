@@ -1,3 +1,5 @@
+"use server";
+import { signOut } from "@/app/(auth)/auth";
 import { ErrorResponse } from "@/types/actions";
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { redirect } from "next/navigation";
@@ -12,9 +14,13 @@ const instance: AxiosInstance = axios.create({
 
 instance.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
+    if (error.response?.status === 401) {
+      await signOut({ redirect: false });
+    }
+
     return Promise.reject(error);
-  }
+  },
 );
 
 export async function axiosGet<T = unknown>(
@@ -25,7 +31,7 @@ export async function axiosGet<T = unknown>(
   }: {
     params?: Record<string, string | number>;
     config?: AxiosRequestConfig;
-  } = {}
+  } = {},
 ): Promise<T> {
   try {
     const response = await instance.get<T>(url, {
@@ -34,7 +40,9 @@ export async function axiosGet<T = unknown>(
     });
 
     return response.data;
-  } catch (error) {
+  } catch (err) {
+    const error = err as AxiosError<any>;
+
     throw error;
   }
 }
@@ -42,7 +50,7 @@ export async function axiosGet<T = unknown>(
 export async function axiosPost<T = unknown>(
   url: string,
   payload?: unknown,
-  { config }: { config?: AxiosRequestConfig } = {}
+  { config }: { config?: AxiosRequestConfig } = {},
 ): Promise<T | ErrorResponse> {
   try {
     const response = await instance.post<T>(url, payload, { ...config });
