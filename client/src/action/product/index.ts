@@ -111,7 +111,7 @@ export const createProductAction = async (_: any, formData: FormData) => {
 
 const createProduct = async (payload: any) => {
   const session = await auth();
-  const authToken = session?.user?.access_token as string;
+  const authToken = session?.user?.access_token ?? "";
 
   const url = "/admin/products";
   const response = await axiosPost<SuccessResponse<null>>(url, payload, {
