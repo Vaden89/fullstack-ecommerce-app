@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
+import { IS_PUBLIC_KEY } from '~/decorators/bypass-auth.decorator';
 import { CustomHttpException } from '~/helpers/custom.exception';
 import { TokenService } from '~/modules/token/token.service';
 import { UserService } from '~/modules/user/user.service';
@@ -21,14 +22,12 @@ export class AuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: Request = context.switchToHttp().getRequest();
 
-    const isPublic: boolean = this.reflector.getAllAndOverride('IsPublic', [
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);
 
-    if (isPublic) {
-      return true;
-    }
+    if (isPublic) return true;
 
     const token = this.tokenService.extractTokenFromHeader(request);
 

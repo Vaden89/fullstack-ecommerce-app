@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "@/app/(auth)/auth";
 import { axiosPost } from "@/lib/api";
 import { utapi } from "@/lib/uploadthing";
 import { collectErrorMessages } from "@/lib/utils";
@@ -45,7 +46,6 @@ export const createProductAction = async (_: any, formData: FormData) => {
         const uploadResult = await utapi.uploadFiles(validImageFiles, {
           concurrency: validImageFiles.length,
         });
-
         uploadedImageUrls = uploadResult
           .filter((result) => result.data !== null)
           .map((result) => result.data.ufsUrl);
@@ -110,8 +110,17 @@ export const createProductAction = async (_: any, formData: FormData) => {
 };
 
 const createProduct = async (payload: any) => {
-  const url = "/products";
-  const response = await axiosPost<SuccessResponse<null>>(url, payload);
+  const session = await auth();
+  const authToken = session?.user?.access_token ?? "";
+
+  const url = "/admin/products";
+  const response = await axiosPost<SuccessResponse<null>>(url, payload, {
+    config: {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    },
+  });
 
   if (!("data" in response)) {
     return response as ErrorResponse;

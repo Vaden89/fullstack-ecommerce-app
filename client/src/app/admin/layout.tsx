@@ -1,3 +1,4 @@
+"use client";
 import { AppSideBar } from "@/components/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { PageProvider } from "@/contexts/admin-page-provider";

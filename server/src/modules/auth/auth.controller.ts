@@ -13,7 +13,9 @@ import { ReqResetPasswordDTO } from './dto/req-pwd-reset.dto';
 import { ResetPasswordDTO } from './dto/reset-pwd.dto';
 import { Request } from 'express';
 import { CreateAdminDTO } from './dto/create-admin.dto';
+import { SkipAuth } from '~/decorators/bypass-auth.decorator';
 
+@SkipAuth()
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}

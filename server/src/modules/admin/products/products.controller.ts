@@ -20,7 +20,7 @@ import { Roles } from '~/decorators/roles.decorator';
 
 @Roles([AvailableRoles.ADMIN])
 @UseGuards(RoleGuard)
-@Controller('products')
+@Controller('admin/products')
 export class ProductsController {
   constructor(private productService: ProductsService) {}
 

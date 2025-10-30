@@ -1,5 +1,4 @@
-import { Reflector } from '@nestjs/core';
+import { SetMetadata } from '@nestjs/common';
 
-const BaseIsPublic = Reflector.createDecorator<boolean>();
-
-export const IsPublic = (value = true) => BaseIsPublic(value);
+export const IS_PUBLIC_KEY = 'isPublic';
+export const SkipAuth = () => SetMetadata(IS_PUBLIC_KEY, true);
