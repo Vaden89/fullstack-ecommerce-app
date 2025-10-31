@@ -1,7 +1,9 @@
 import { Controller, Get, Param, ParseUUIDPipe, Query } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { PaginationDTO } from '~/common/dto/pagination.dto';
+import { SkipAuth } from '~/decorators/bypass-auth.decorator';
 
+@SkipAuth()
 @Controller('products')
 export class ProductsController {
   constructor(private productService: ProductsService) {}

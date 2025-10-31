@@ -13,6 +13,8 @@ import { createProductAction } from "@/action/product";
 import { Response } from "@/types/actions";
 import { AddProductFormData } from "@/types/form-schema/product/add-product";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { toast } from "sonner";
+import { mutate } from "swr";
 
 export const AddProductBtn = () => {
   const initialState: Response<null> & { inputs: AddProductFormData } = {
@@ -35,8 +37,8 @@ export const AddProductBtn = () => {
 
   useEffect(() => {
     if ("data" in state) {
-      //TODO: Add a toast notification for success
-      console.log("Success");
+      toast.success("Product created successfully");
+      mutate("/products");
       setIsModalOpen(false);
       setSelectedImages([]);
     }
@@ -60,8 +62,10 @@ export const AddProductBtn = () => {
     <CustomModal
       maxWidth="3xl"
       loading={isPending}
+      isOpen={isModalOpen}
       title="Create Product"
       handleSubmit={handleSubmit}
+      onOpenChange={setIsModalOpen}
       trigger={<CustomButton icon={Plus}>Add Product</CustomButton>}
     >
       <div className="w-full flex flex-col gap-3 my-3">

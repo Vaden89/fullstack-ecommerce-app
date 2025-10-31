@@ -1,14 +1,21 @@
 "use server";
 
 import { auth } from "@/app/(auth)/auth";
-import { axiosPost } from "@/lib/api";
+import { axiosGet, axiosPost } from "@/lib/api";
 import { utapi } from "@/lib/uploadthing";
 import { collectErrorMessages } from "@/lib/utils";
-import { ErrorResponse, SuccessResponse } from "@/types/actions";
+import {
+  ErrorResponse,
+  PaginatedSuccessReponse,
+  Response,
+  SuccessResponse,
+} from "@/types/actions";
 import {
   AddProductFormData,
   addProductSchema,
 } from "@/types/form-schema/product/add-product";
+import { Product } from "@/types/product";
+import { AxiosError } from "axios";
 import z from "zod";
 
 export const createProductAction = async (_: any, formData: FormData) => {
@@ -127,4 +134,34 @@ const createProduct = async (payload: any) => {
   }
 
   return response;
+};
+
+export const getProductAction = async (
+  page: number,
+  limit: number,
+  q: string,
+) => {
+  try {
+    const url = `/products`;
+    const response = await axiosGet<PaginatedSuccessReponse<Product[]>>(url, {
+      params: {
+        page,
+        limit,
+        q,
+      },
+    });
+
+    return response.data;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string; error: string }>;
+    let errorMessage = "";
+
+    if (!error.response) {
+      errorMessage = "Unable to reach server, try again later.";
+    } else {
+      errorMessage = error.response?.data.message ?? "Unexpected Error occured";
+    }
+
+    throw new Error(errorMessage);
+  }
 };
