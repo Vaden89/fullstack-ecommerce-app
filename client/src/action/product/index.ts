@@ -159,7 +159,8 @@ export const getProductAction = async (
     if (!error.response) {
       errorMessage = "Unable to reach server, try again later.";
     } else {
-      errorMessage = error.response?.data.message ?? "Unexpected Error occured";
+      errorMessage =
+        error.response?.data.message ?? "Unexpected Error occurred";
     }
 
     throw new Error(errorMessage);

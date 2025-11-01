@@ -13,8 +13,9 @@ export const ProductTable = () => {
   const [searchField, setSearchField] = useState("");
   const { pagination, setPagination, limit, page } = usePagination();
 
-  const { data, error, isLoading } = useSWR("/products", () =>
-    getProductAction(page, limit, searchField),
+  const { data, error, isLoading } = useSWR(
+    ["/products", page, limit, searchField],
+    () => getProductAction(page, limit, searchField),
   );
 
   const products: Product[] = data?.data ?? [];

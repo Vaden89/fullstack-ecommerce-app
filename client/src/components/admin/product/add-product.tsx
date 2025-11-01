@@ -38,7 +38,7 @@ export const AddProductBtn = () => {
   useEffect(() => {
     if ("data" in state) {
       toast.success("Product created successfully");
-      mutate("/products");
+      mutate((key) => Array.isArray(key) && key[0] === "/products");
       setIsModalOpen(false);
       setSelectedImages([]);
     }
