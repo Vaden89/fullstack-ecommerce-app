@@ -3,8 +3,12 @@ export interface SuccessResponse<T> {
   message: string;
 }
 
-export interface PaginatedSuccessReponse<T> extends SuccessResponse<T> {
-  meta: PaginationMeta;
+export interface PaginatedSuccessReponse<T>
+  extends Omit<SuccessResponse<T>, "data"> {
+  data: {
+    data: T;
+    meta: PaginationMeta;
+  };
 }
 
 export interface PaginationMeta {

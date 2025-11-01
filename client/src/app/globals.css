@@ -148,7 +148,7 @@ li::marker {
 .three-body {
     --uib-size: 50px;
     --uib-speed: 0.8s;
-    --uib-color: #138754;
+    --uib-color: var(--secondary);
     position: relative;
     display: inline-block;
     height: var(--uib-size);

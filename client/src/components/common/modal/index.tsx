@@ -15,10 +15,11 @@ interface CustomModalProps {
   title: string;
   isOpen?: boolean;
   subTitle?: string;
+  loading?: boolean;
   onClose?: () => void;
   trigger?: React.ReactNode;
   children?: React.ReactNode;
-  loading?: boolean;
+  onOpenChange?: (val: boolean) => void;
   maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
   handleSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 }
@@ -31,6 +32,7 @@ export default function CustomModal({
   title,
   subTitle,
   handleSubmit,
+  onOpenChange,
   maxWidth = "lg",
   loading = false,
 }: CustomModalProps) {
@@ -54,7 +56,7 @@ export default function CustomModal({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent className={` ${getMaxWidthClass()}`}>
         <form onSubmit={handleSubmit}>

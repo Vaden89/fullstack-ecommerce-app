@@ -6,7 +6,10 @@ export const useProductColumns = (): ColumnDef<Product>[] => {
     {
       header: "Id",
       accessorKey: "id",
-      cell: ({ row }) => `product-${row.original.id}`,
+      cell: ({ row }) => {
+        console.log(row.original);
+        return `product-${row.original.id}`;
+      },
     },
     {
       header: "Name",
@@ -16,7 +19,9 @@ export const useProductColumns = (): ColumnDef<Product>[] => {
     {
       header: "Category",
       accessorFn: (row) => row.category.name,
-      cell: ({ row }) => row.original.category.name,
+      cell: ({ row }) => {
+        return `-`;
+      },
     },
     {
       header: "Stock",
