@@ -1,7 +1,13 @@
 import { Product } from "@/types/product";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const useProductColumns = (): ColumnDef<Product>[] => {
+export const useProductColumns = ({
+  setProduct,
+  setModalAction,
+}: {
+  setProduct: (product: Product) => void;
+  setModalAction: (action: string) => void;
+}): ColumnDef<Product>[] => {
   return [
     {
       header: "Id",
@@ -45,10 +51,11 @@ export const useProductColumns = (): ColumnDef<Product>[] => {
         <button
           className="w-full text-center"
           onClick={() => {
-            /* TODO: Implement edit action */
+            setModalAction("delete");
+            setProduct(row.original);
           }}
         >
-          Edit
+          Delete
         </button>
       ),
     },

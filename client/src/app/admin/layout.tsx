@@ -1,17 +1,21 @@
-"use client";
 import { AppSideBar } from "@/components/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { PageProvider } from "@/contexts/admin-page-provider";
+import { auth } from "../(auth)/auth";
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
+
+  const user = session?.user;
+
   return (
     <SidebarProvider>
       <AppSideBar />
-      <PageProvider>{children}</PageProvider>
+      <PageProvider user={user!}>{children}</PageProvider>
     </SidebarProvider>
   );
 }

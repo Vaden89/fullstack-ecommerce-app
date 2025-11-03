@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@/app/(auth)/auth";
-import { axiosGet, axiosPost } from "@/lib/api";
+import { axiosDelete, axiosGet, axiosPost } from "@/lib/api";
 import { utapi } from "@/lib/uploadthing";
 import { collectErrorMessages } from "@/lib/utils";
 import {
@@ -165,4 +165,26 @@ export const getProductAction = async (
 
     throw new Error(errorMessage);
   }
+};
+
+export const deleteProductAction = async (_: any, formData: FormData) => {
+  const session = await auth();
+  const authToken = session?.user?.access_token ?? "";
+
+  const productId = formData.get("id") as string;
+
+  const url = `/admin/products/${productId}`;
+  const response = await axiosDelete<SuccessResponse<null>>(url, {
+    config: {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    },
+  });
+
+  if (!("data" in response)) {
+    return response as ErrorResponse;
+  }
+
+  return response;
 };

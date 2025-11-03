@@ -1,5 +1,5 @@
 export interface AbstractBaseInterface {
-  id?: string;
+  id: string;
   createdAt: Date;
   updatedAt: Date;
 }
