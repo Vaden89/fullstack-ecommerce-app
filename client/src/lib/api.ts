@@ -76,3 +76,32 @@ export async function axiosPost<T = unknown>(
     return errorResponse;
   }
 }
+
+export async function axiosDelete<T = unknown>(
+  url: string,
+  { config }: { config?: AxiosRequestConfig } = {},
+): Promise<T | ErrorResponse> {
+  try {
+    const response = await instance.delete<T>(url, config);
+
+    return response.data;
+  } catch (err) {
+    const error = err as AxiosError<any>;
+
+    const data = error.response?.data;
+
+    const errorResponse: ErrorResponse = {
+      error:
+        data?.error ??
+        data?.errors ??
+        error.message ??
+        "An unexpected error occurred.",
+      message:
+        data?.message ??
+        error.response?.statusText ??
+        "Something went wrong while processing your request.",
+    };
+
+    return errorResponse;
+  }
+}

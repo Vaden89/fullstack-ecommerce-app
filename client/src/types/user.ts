@@ -8,6 +8,8 @@ export enum UserRole {
 export interface UserInterface extends AbstractBaseInterface {
   email: string;
   role: UserRole;
+  lastname: string;
+  firstname: string;
   isVerified: boolean;
   phone: string | null;
 }

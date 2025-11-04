@@ -12,7 +12,7 @@ import {
 import { CustomButton } from "../button";
 
 interface CustomModalProps {
-  title: string;
+  title?: string;
   isOpen?: boolean;
   subTitle?: string;
   loading?: boolean;
@@ -22,6 +22,8 @@ interface CustomModalProps {
   onOpenChange?: (val: boolean) => void;
   maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
   handleSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
+  confirmBtnText?: string;
+  confirmBtnVariant?: "primary" | "destructive";
 }
 
 export default function CustomModal({
@@ -35,6 +37,8 @@ export default function CustomModal({
   onOpenChange,
   maxWidth = "lg",
   loading = false,
+  confirmBtnText = "Confirm",
+  confirmBtnVariant = "primary",
 }: CustomModalProps) {
   const getMaxWidthClass = () => {
     switch (maxWidth) {
@@ -72,8 +76,12 @@ export default function CustomModal({
                 Cancel
               </Button>
             </DialogClose>
-            <CustomButton type="submit" loading={loading}>
-              Confirm
+            <CustomButton
+              type="submit"
+              loading={loading}
+              variant={confirmBtnVariant}
+            >
+              {confirmBtnText}
             </CustomButton>
           </DialogFooter>
         </form>

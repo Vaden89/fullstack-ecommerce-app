@@ -1,7 +1,10 @@
 "use client";
 
+import { auth } from "@/app/(auth)/auth";
+import { UserInterface } from "@/types/user";
 import Image from "next/image";
-import { createContext, useContext, useState } from "react";
+import { redirect } from "next/navigation";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface PageContextType {
   setPageTitle: (title: string) => void;
@@ -9,13 +12,19 @@ interface PageContextType {
 
 const PageContext = createContext<PageContextType | undefined>(undefined);
 
-export const PageProvider = ({ children }: { children: React.ReactNode }) => {
+export const PageProvider = ({
+  children,
+  user,
+}: {
+  children: React.ReactNode;
+  user: UserInterface;
+}) => {
   const [pageTitle, setPageTitle] = useState("Dashboard");
 
   return (
     <PageContext value={{ setPageTitle }}>
       <main className="w-full">
-        <PageHeader title={pageTitle} />
+        <PageHeader title={pageTitle} user={user} />
         <div className="w-full h-full p-5">{children}</div>
       </main>
     </PageContext>
@@ -34,7 +43,13 @@ export const usePage = () => {
   return context;
 };
 
-const PageHeader = ({ title }: { title: string }) => {
+const PageHeader = ({
+  title,
+  user,
+}: {
+  title: string;
+  user: UserInterface;
+}) => {
   return (
     <div className="w-full bg-sidebar h-16 border-b flex items-center justify-between px-4">
       <h1 className="text-xl font-semibold">{title}</h1>
@@ -42,7 +57,7 @@ const PageHeader = ({ title }: { title: string }) => {
       <div>
         <div className="flex items-center gap-3">
           <div className="flex flex-col items-end">
-            <span className="font-medium text-sm">Isaac Shosanya</span>
+            <span className="font-medium text-sm">{`${user?.firstname} ${user?.lastname}`}</span>
             <div className="text-xs text-muted-foreground flex gap-2 items-center">
               <div className="w-2 h-2 bg-green-500 rounded-full" />
               <span>Online</span>
