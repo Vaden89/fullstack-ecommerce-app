@@ -2,6 +2,7 @@ import { AppSideBar } from "@/components/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { PageProvider } from "@/contexts/admin-page-provider";
 import { auth } from "../(auth)/auth";
+import { redirect } from "next/navigation";
 
 export default async function AdminLayout({
   children,
@@ -10,12 +11,16 @@ export default async function AdminLayout({
 }) {
   const session = await auth();
 
+  if (!session) {
+    redirect("/login");
+  }
+
   const user = session?.user;
 
   return (
     <SidebarProvider>
       <AppSideBar />
-      <PageProvider user={user!}>{children}</PageProvider>
+      <PageProvider user={user}>{children}</PageProvider>
     </SidebarProvider>
   );
 }

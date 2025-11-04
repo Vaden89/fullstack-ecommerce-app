@@ -173,6 +173,13 @@ export const deleteProductAction = async (_: any, formData: FormData) => {
 
   const productId = formData.get("id") as string;
 
+  if (typeof productId != "string" || productId) {
+    return {
+      error: "Product Id is missing or invalid.",
+      message: "Could not delete product",
+    } as ErrorResponse;
+  }
+
   const url = `/admin/products/${productId}`;
   const response = await axiosDelete<SuccessResponse<null>>(url, {
     config: {
