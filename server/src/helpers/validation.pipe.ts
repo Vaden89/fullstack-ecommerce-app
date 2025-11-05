@@ -46,7 +46,7 @@ export class CustomValidationPipe implements PipeTransform<unknown> {
         missingRequiredFields.length > 0
           ? missingRequiredFields.length === 1
             ? `{${missingRequiredFields[0]} is required}`
-            : `{The following fields are invalid: ${missingRequiredFields.join(', ')}}`
+            : `{The following fields are required: ${missingRequiredFields.join(', ')}}`
           : invalidFields.length === 1
             ? `{${invalidFields[0]} is invalid}`
             : `${invalidFields.join(', ')} are invalid`;
@@ -58,7 +58,7 @@ export class CustomValidationPipe implements PipeTransform<unknown> {
       );
     }
 
-    return value;
+    return object;
   }
 
   private toValidate(metaType: Type): boolean {
