@@ -60,6 +60,7 @@ const DesktopSearchComponent = () => {
         className="w-full h-full bg-transparent outline-none"
         type="text"
         placeholder="Search..."
+        aria-label="Search for products"
       />
     </div>
   );

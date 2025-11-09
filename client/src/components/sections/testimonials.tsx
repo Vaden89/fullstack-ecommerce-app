@@ -9,9 +9,9 @@ export const TestimonialSection = () => {
   const scroll = (direction: "left" | "right") => {
     if (scrollContainer.current) {
       const container = scrollContainer.current;
-      const scrollAmount = container.clientWidth / 2;
+      const scrollAmount = container.clientWidth;
 
-      container.scrollTo({
+      container.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
       });
@@ -24,7 +24,7 @@ export const TestimonialSection = () => {
         <span className="text-[32px] leading-9 font-bold">
           OUR HAPPY <br className="sm:hidden" /> CUSTOMERS
         </span>
-        <div className="hidden sm:flex items-center gap-4">
+        <div className="flex items-center gap-4">
           <button
             onClick={() => scroll("left")}
             aria-label="Previous Testimonial"
