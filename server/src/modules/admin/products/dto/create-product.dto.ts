@@ -4,7 +4,7 @@ import {
   IsNotEmpty,
   IsNumber,
   IsString,
-} from '@nestjs/class-validator';
+} from 'class-validator';
 
 export class CreateProductDTO {
   @IsNotEmpty()

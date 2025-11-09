@@ -33,28 +33,32 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="w-full -mt-32 px-4 py-28 flex flex-col bg-gray-200 gap-4">
-      <div className="flex flex-col gap-2">
-        <span className="text-3xl font-bold">SHOP.CO</span>
-        <p className="text-gray-500 text-sm leading-[20px]">
-          We have clothes thtat suits your style and which you're proud to wear.
-          From women to men
-        </p>
-      </div>
-      <div className="flex items-center gap-2">
-        <SocialCard icon={TwitterIcon} />
-        <SocialCard icon={FacebookIcon} />
-        <SocialCard icon={InstagramIcon} isFilled={false} />
-        <SocialCard icon={GithubIcon} />
-      </div>
-      <div className="w-full grid grid-cols-2 gap-6">
-        {columns.map((column, index) => (
-          <FooterBaseColumn
-            key={index}
-            header={column.header}
-            children={column.children}
-          />
-        ))}
+    <footer className="w-full -mt-32 sm:-mt-24 px-4 pt-28 sm:pb-0 flex flex-col bg-gray-200 gap-4">
+      <div className="flex flex-col sm:flex-row gap-4">
+        <div>
+          <div className="flex flex-col gap-2">
+            <span className="text-3xl font-bold">SHOP.CO</span>
+            <p className="text-gray-500 text-sm leading-[20px]">
+              We have clothes thtat suits your style and which you're proud to
+              wear. From women to men
+            </p>
+          </div>
+          <div className="flex items-center gap-2 mt-3">
+            <SocialCard icon={TwitterIcon} />
+            <SocialCard icon={FacebookIcon} />
+            <SocialCard icon={InstagramIcon} isFilled={false} />
+            <SocialCard icon={GithubIcon} />
+          </div>
+        </div>
+        <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-6">
+          {columns.map((column, index) => (
+            <FooterBaseColumn
+              key={index}
+              header={column.header}
+              children={column.children}
+            />
+          ))}
+        </div>
       </div>
       <div
         className="w-full flex flex-col items-center border-t

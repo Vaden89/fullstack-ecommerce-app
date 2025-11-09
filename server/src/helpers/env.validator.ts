@@ -1,11 +1,11 @@
-import { plainToClass, Transform } from '@nestjs/class-transformer';
+import { plainToClass, Transform } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
   IsNumber,
   IsString,
   validateSync,
-} from '@nestjs/class-validator';
+} from 'class-validator';
 import { Logger } from '@nestjs/common';
 
 const logger = new Logger('EnvValidator');
