@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const Navbar = () => {
   return (
-    <div className="w-full h-20 flex items-center justify-between p-4 sm:px-14 bg-white gap-5">
+    <nav className="w-full h-20 flex items-center justify-between p-4 sm:px-14 bg-white gap-5">
       <div className="flex gap-2 items-center">
         <button className="sm:hidden" aria-label="Open Menu">
           <Menu className="w-6 h-6" />
@@ -14,7 +14,7 @@ export const Navbar = () => {
       </div>
       <MobileMenu />
       <DesktopMenu />
-    </div>
+    </nav>
   );
 };
 
