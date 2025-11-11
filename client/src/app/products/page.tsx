@@ -5,6 +5,7 @@ import { ProductCardSkeleton } from "@/components/common/product-card-skeleton";
 import { Button } from "@/components/ui/button";
 import { usePagination } from "@/hooks/use-pagination";
 import { Product } from "@/types/product";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
 import useSWR from "swr";
@@ -106,6 +107,8 @@ const ProductPagination = ({
   const totalPages = Math.ceil(total / limit);
   const disableNext = page >= totalPages;
 
+  const pagesArr = Array.from({ length: totalPages });
+
   const toPrevious = () => {
     if (page != 1) {
       setPagination((p) => ({
@@ -124,14 +127,48 @@ const ProductPagination = ({
     }
   };
 
+  const jumpToPage = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setPagination((p) => ({
+        ...p,
+        pageIndex: page,
+      }));
+    }
+  };
+
   return (
     <div className="w-full h-14 border-t mt-4 flex items-center justify-between">
-      <Button disabled={page == 1} onClick={toPrevious} variant="outline">
+      <Button
+        disabled={page == 1}
+        onClick={toPrevious}
+        variant="outline"
+        className="flex items-center"
+      >
+        <ArrowLeft />
         Previous
       </Button>
-      <div className="text-sm text-gray-500">display available pages here</div>
-      <Button disabled={disableNext} variant="outline">
-        Next
+      {/*
+        TODO: Fix up this to dynamically hide page numbers when the total number of pages is greater than 10
+      */}
+      <div className="flex gap-2 items-center">
+        {pagesArr.map((_, index) => (
+          <Button
+            onClick={() => jumpToPage(index + 1)}
+            variant="outline"
+            key={index}
+            className="mx-1"
+          >
+            {index + 1}
+          </Button>
+        ))}
+      </div>
+      <Button
+        onClick={toNext}
+        variant="outline"
+        disabled={disableNext}
+        className="flex items-center"
+      >
+        Next <ArrowRight />
       </Button>
     </div>
   );
