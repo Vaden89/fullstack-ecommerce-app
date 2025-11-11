@@ -4,8 +4,8 @@ import Image from "next/image";
 
 export const ProductCard = ({ product }: { product: Product }) => {
   return (
-    <div className="w-[200px] flex flex-col gap-4">
-      <div className="relative w-full h-[200px] border rounded-lg">
+    <div className="sm:w-full flex flex-col gap-4">
+      <div className="relative w-full aspect-square border rounded-lg">
         {product.imageUrls[0] ? (
           <Image
             alt={product.name}

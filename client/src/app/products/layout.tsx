@@ -13,7 +13,7 @@ export default function ProductsLayout({
     <div className="w-full h-full flex flex-col">
       <DiscountBanner />
       <Navbar />
-      <div className="w-full h-full sm:px-14">
+      <div className="w-full h-full px-4 sm:px-14">
         <hr />
         {children}
       </div>
