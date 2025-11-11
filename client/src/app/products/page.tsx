@@ -14,7 +14,7 @@ export default function ProductsPage() {
   const [filters, setFilters] = useState();
   const { limit, page, setPagination } = usePagination();
   const { data, isLoading } = useSWR(["/products", page, limit], () =>
-    getProductAction(1, 10, ""),
+    getProductAction(page, limit, ""),
   );
 
   const productData = data?.data ?? [];
