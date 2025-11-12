@@ -1,18 +1,20 @@
 import Link from "next/link";
-import { ProductCardSkeleton } from "../common/product-card-skeleton";
+import { Suspense } from "react";
 import { Button } from "../ui/button";
+import { Product } from "@/types/product";
+import { ProductCard } from "../common/product-card";
+import { getTopSellingProducts } from "@/action/product";
+import { ProductCardSkeleton } from "../common/product-card-skeleton";
+import { ProductListFallBack } from "../common/product-list-fallback";
 
-export const NewArrivalSection = () => {
+export const NewArrivalSection = async () => {
   return (
     <div className="w-full flex flex-col text-center p-5 gap-4 sm:gap-6">
       <span className="text-4xl font-bold leading-[100%]">NEW ARRIVAL</span>
-      <div className="w-full sm:grid grid-cols-4 flex overflow-x-auto gap-4 hide-scroll">
-        <ProductCardSkeleton />
-        <ProductCardSkeleton />
-        <ProductCardSkeleton />
-        <ProductCardSkeleton />
-      </div>
-      <Link href="#">
+      <Suspense fallback={<ProductListFallBack />}>
+        <ProductList />
+      </Suspense>
+      <Link href="/products">
         <Button
           variant="outline"
           className="w-full sm:w-[218px] mt-4 h-12 rounded-xl sm:rounded-full font-semibold"
@@ -20,6 +22,23 @@ export const NewArrivalSection = () => {
           View All
         </Button>
       </Link>
+    </div>
+  );
+};
+
+const ProductList = async () => {
+  let products: Product[] = [];
+  const data = await getTopSellingProducts();
+
+  if ("data" in data) {
+    products = data.data;
+  }
+
+  return (
+    <div className="w-full sm:grid grid-cols-4 flex overflow-x-auto gap-4 hide-scroll">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
     </div>
   );
 };

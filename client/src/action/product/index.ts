@@ -163,6 +163,8 @@ export const getProductAction = async (
         error.response?.data.message ?? "Unexpected Error occurred";
     }
 
+    console.log(errorMessage);
+
     throw new Error(errorMessage);
   }
 };
@@ -194,4 +196,20 @@ export const deleteProductAction = async (_: any, formData: FormData) => {
   }
 
   return response;
+};
+
+export const getTopSellingProducts = async () => {
+  try {
+    const url = "/products";
+    const response = await axiosGet<PaginatedSuccessReponse<Product[]>>(url);
+
+    if (!("data" in response)) {
+      return response as ErrorResponse;
+    }
+
+    return response.data;
+  } catch (error) {
+    // Throw a meaning full error that can be handled by swt
+    throw error;
+  }
 };

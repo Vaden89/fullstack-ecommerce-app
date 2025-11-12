@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 
+// NOTE: the pageIndex is zero based because tanstack table makes use of zero based data
+
 export const usePagination = () => {
   const [pagination, setPagination] = useState({
     pageSize: 10,

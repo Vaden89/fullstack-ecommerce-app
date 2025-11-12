@@ -4,25 +4,28 @@ import Image from "next/image";
 
 export const ProductCard = ({ product }: { product: Product }) => {
   return (
-    <div className="w-[200px] flex flex-col gap-4">
-      <div className="w-full h-[200px] bg-[#F0EEED] rounded-lg p-4">
+    <div className="sm:w-full flex flex-col gap-4">
+      <div className="relative w-full aspect-square border rounded-lg">
         {product.imageUrls[0] ? (
           <Image
-            src={product.imageUrls[0]}
-            fill
             alt={product.name}
-            className="object-contain p-4"
+            fill
+            src={product.imageUrls[0]}
+            className="object-contain aspect-square"
           />
         ) : (
           <CameraOff className="w-[100px] aspect-square" />
         )}
       </div>
-      <div className="w-full flex flex-col">
-        <span>{product.name}</span>
-        <span>
-          {product.price.toLocaleString("en-US", {
+      <div className="w-full text-left flex flex-col">
+        <span className="text-2xl font-bold truncate">{product.name}</span>
+        <span className="text-lg">
+          ₦{" "}
+          {product.price.toLocaleString("en-NG", {
             style: "currency",
             currency: "NGN",
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2,
           })}
         </span>
       </div>

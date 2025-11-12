@@ -16,7 +16,7 @@ export const NewsLetterSection = () => {
             id="email"
             label=""
             name="email"
-            className="w-full bg-white"
+            className="w-full bg-white rounded-full"
             icon={Mail}
             iconPosition="left"
           />

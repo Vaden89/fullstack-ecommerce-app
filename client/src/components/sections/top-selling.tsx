@@ -1,17 +1,19 @@
 import Link from "next/link";
-import { ProductCardSkeleton } from "../common/product-card-skeleton";
+import { Suspense } from "react";
 import { Button } from "../ui/button";
+import { Product } from "@/types/product";
+import { ProductCard } from "../common/product-card";
+import { getTopSellingProducts } from "@/action/product";
+import { ProductCardSkeleton } from "../common/product-card-skeleton";
+import { ProductListFallBack } from "../common/product-list-fallback";
 
 export const TopSellingSection = () => {
   return (
     <div className="w-full flex flex-col text-center p-5 gap-4">
       <span className="text-4xl font-bold leading-[100%]">TOP SELLING</span>
-      <div className="w-full flex sm:grid grid-cols-4 overflow-x-auto gap-4 hide-scroll">
-        <ProductCardSkeleton />
-        <ProductCardSkeleton />
-        <ProductCardSkeleton />
-        <ProductCardSkeleton />
-      </div>
+      <Suspense fallback={<ProductListFallBack />}>
+        <ProductList />
+      </Suspense>
       <Link href="#">
         <Button
           variant="outline"
@@ -20,6 +22,23 @@ export const TopSellingSection = () => {
           View All
         </Button>
       </Link>
+    </div>
+  );
+};
+
+const ProductList = async () => {
+  let products: Product[] = [];
+  const data = await getTopSellingProducts();
+
+  if ("data" in data) {
+    products = data.data;
+  }
+
+  return (
+    <div className="w-full sm:grid grid-cols-4 flex overflow-x-auto gap-4 hide-scroll">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
     </div>
   );
 };
