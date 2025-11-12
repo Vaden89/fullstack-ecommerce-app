@@ -1,17 +1,17 @@
 "use client";
+import useSWR from "swr";
+import Image from "next/image";
+import { Product } from "@/types/product";
+import { Button } from "@/components/ui/button";
 import { getProductAction } from "@/action/product";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { usePagination } from "@/hooks/use-pagination";
+import { Dispatch, SetStateAction, useState } from "react";
 import { ProductCard } from "@/components/common/product-card";
 import { ProductCardSkeleton } from "@/components/common/product-card-skeleton";
-import { Button } from "@/components/ui/button";
-import { usePagination } from "@/hooks/use-pagination";
-import { Product } from "@/types/product";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import Image from "next/image";
-import { Dispatch, SetStateAction, useState } from "react";
-import useSWR from "swr";
 
 export default function ProductsPage() {
-  const [filters, setFilters] = useState();
+  const [filters, setFilters] = useState<Record<string, any> | undefined>();
   const { limit, page, setPagination } = usePagination();
   const { data, isLoading } = useSWR(["/products", page, limit], () =>
     getProductAction(page, limit, ""),
@@ -84,8 +84,8 @@ const ProductList = ({ products }: { products: Product[] }) => {
 const ProductListSkeleton = () => {
   return (
     <div className="w-full grid grid-cols-2 sm:grid-cols-3 gap-6">
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => {
-        return <ProductCardSkeleton key={item} />;
+      {Array.from({ length: 9 }).map((_, index) => {
+        return <ProductCardSkeleton key={index} />;
       })}
     </div>
   );
@@ -131,7 +131,7 @@ const ProductPagination = ({
     if (page >= 1 && page <= totalPages) {
       setPagination((p) => ({
         ...p,
-        pageIndex: page,
+        pageIndex: page - 1,
       }));
     }
   };

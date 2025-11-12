@@ -22,11 +22,8 @@ export class CustomValidationPipe implements PipeTransform<unknown> {
         ? new (metatype as new () => object)()
         : (plainToInstance(metatype, value) as object);
 
-    console.log(object);
-
     const validationErrors: ValidationError[] = await validate(object);
 
-    console.log(validationErrors);
     if (validationErrors.length > 0) {
       const invalidFields = validationErrors.map(
         (error: ValidationError) => error.property,

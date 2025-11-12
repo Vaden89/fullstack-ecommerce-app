@@ -199,14 +199,17 @@ export const deleteProductAction = async (_: any, formData: FormData) => {
 };
 
 export const getTopSellingProducts = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  try {
+    const url = "/products";
+    const response = await axiosGet<PaginatedSuccessReponse<Product[]>>(url);
 
-  const url = "/products";
-  const response = await axiosGet<PaginatedSuccessReponse<Product[]>>(url);
+    if (!("data" in response)) {
+      return response as ErrorResponse;
+    }
 
-  if (!("data" in response)) {
-    return response as ErrorResponse;
+    return response.data;
+  } catch (error) {
+    // Throw a meaning full error that can be handled by swt
+    throw error;
   }
-
-  return response.data;
 };
