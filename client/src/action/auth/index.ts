@@ -1,6 +1,6 @@
 "use server";
 
-import { auth, signIn } from "@/app/(auth)/auth";
+import { auth, signIn, signOut } from "@/app/(auth)/auth";
 import { axiosPost } from "@/lib/api";
 import { collectErrorMessages } from "@/lib/utils";
 import { ErrorResponse, SuccessResponse } from "@/types/actions";
@@ -262,4 +262,8 @@ const forgotPassword = async (payload: ForgotPasswordFormData) => {
   }
 
   return response;
+};
+
+export const logoutAction = async () => {
+  await signOut();
 };

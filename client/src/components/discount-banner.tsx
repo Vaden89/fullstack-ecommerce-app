@@ -1,4 +1,12 @@
-export const DiscountBanner = () => {
+import { auth } from "@/app/(auth)/auth";
+
+export const DiscountBanner = async () => {
+  const session = await auth();
+
+  if (session) {
+    return null;
+  }
+
   return (
     <div className="w-full h-[34px] bg-black flex flex-col items-center justify-center text-sm text-white">
       <p>
