@@ -9,6 +9,7 @@ import { usePagination } from "@/hooks/use-pagination";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ProductCard } from "@/components/common/product-card";
 import { ProductCardSkeleton } from "@/components/common/product-card-skeleton";
+import { ProductFilter } from "@/components/product-filter";
 
 export default function ProductsPage() {
   const [filters, setFilters] = useState<Record<string, any> | undefined>();
@@ -22,6 +23,7 @@ export default function ProductsPage() {
 
   const start = (page - 1) * limit + 1;
   const end = Math.min(page * limit, total);
+
   return (
     <div className="w-full h-full mt-4">
       <h1 className="text-muted-foreground text-sm">Home &gt; Casual</h1>
@@ -48,17 +50,23 @@ export default function ProductsPage() {
           </div>
         </div>
         <div className="w-full flex flex-col col-span-5 sm:col-span-4 gap-4">
-          <div className="w-full flex justify-between">
-            <span>All Products</span>
+          <div className="w-full flex items-center justify-between">
+            <span className="text-2xl font-bold">All</span>
             <span className="text-sm text-gray-400">
               Showing {start}-{end} of {total} products
             </span>
+
+            <ProductFilter />
           </div>
-          {isLoading ? (
-            <ProductListSkeleton />
-          ) : (
-            <ProductList products={productData} />
-          )}
+
+          <>
+            {isLoading ? (
+              <ProductListSkeleton />
+            ) : (
+              <ProductList products={productData} />
+            )}
+          </>
+
           <ProductPagination
             page={page}
             total={total}
