@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  Index,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -19,10 +20,11 @@ export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Index({ fulltext: true })
+  @Column('varchar')
   name: string;
 
-  @Column()
+  @Column('varchar')
   description: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })

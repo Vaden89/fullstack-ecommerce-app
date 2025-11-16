@@ -9,8 +9,11 @@ export class ProductsController {
   constructor(private productService: ProductsService) {}
 
   @Get('')
-  async getProducts(@Query() paginationDto: PaginationDTO) {
-    const data = await this.productService.getProducts(paginationDto);
+  async getProducts(
+    @Query() paginationDto: PaginationDTO,
+    @Query('q') query: string,
+  ) {
+    const data = await this.productService.getProducts(paginationDto, query);
 
     return {
       success: true,

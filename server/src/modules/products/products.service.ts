@@ -26,11 +26,19 @@ export class ProductsService {
     return { product };
   }
 
-  async getProducts({ limit, page }: PaginationDTO) {
-    const [products, total] = await this.productRepository.findAndCount({
-      take: limit,
-      skip: (page - 1) * limit,
-    });
+  async getProducts({ limit, page }: PaginationDTO, query: string) {
+    const queryBuilder = this.productRepository.createQueryBuilder('product');
+
+    if (query && query.trim()) {
+      queryBuilder.where('product.name ILIKE :query', {
+        query: `%${query}%`,
+      });
+    }
+
+    const [products, total] = await queryBuilder
+      .take(limit)
+      .skip((page - 1) * limit)
+      .getManyAndCount();
 
     return {
       data: products,
