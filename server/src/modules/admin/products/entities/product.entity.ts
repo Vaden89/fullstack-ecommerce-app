@@ -19,10 +19,10 @@ export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column('varchar')
   name: string;
 
-  @Column()
+  @Column('varchar')
   description: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })

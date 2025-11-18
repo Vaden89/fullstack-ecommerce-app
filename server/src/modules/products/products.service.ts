@@ -26,11 +26,26 @@ export class ProductsService {
     return { product };
   }
 
-  async getProducts({ limit, page }: PaginationDTO) {
-    const [products, total] = await this.productRepository.findAndCount({
-      take: limit,
-      skip: (page - 1) * limit,
-    });
+  async getProducts({ limit, page }: PaginationDTO, query: string) {
+    const queryBuilder = this.productRepository.createQueryBuilder('product');
+
+    if (query && query.trim()) {
+      const searchQuery = `${query.trim().split(' ').join(':* & ')}:*`;
+
+      // Change this implmentation to not create the search vector on every call instead do it once and store it on a column and just query that {Optimization}
+
+      queryBuilder
+        .addSelect('*')
+        .where(
+          "to_tsvector('english', product.name) @@ to_tsquery('english', :searchQuery)",
+          { searchQuery },
+        );
+    }
+
+    const [products, total] = await queryBuilder
+      .take(limit)
+      .skip((page - 1) * limit)
+      .getManyAndCount();
 
     return {
       data: products,
