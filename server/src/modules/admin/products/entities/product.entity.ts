@@ -3,7 +3,6 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  Index,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -20,7 +19,6 @@ export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Index({ fulltext: true })
   @Column('varchar')
   name: string;
 

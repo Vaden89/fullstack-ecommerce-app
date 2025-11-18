@@ -30,9 +30,16 @@ export class ProductsService {
     const queryBuilder = this.productRepository.createQueryBuilder('product');
 
     if (query && query.trim()) {
-      queryBuilder.where('product.name ILIKE :query', {
-        query: `%${query}%`,
-      });
+      const searchQuery = `${query.trim().split(' ').join(':* & ')}:*`;
+
+      // Change this implmentation to not create the search vector on every call instead do it once and store it on a column and just query that {Optimization}
+
+      queryBuilder
+        .addSelect('*')
+        .where(
+          "to_tsvector('english', product.name) @@ to_tsquery('english', :searchQuery)",
+          { searchQuery },
+        );
     }
 
     const [products, total] = await queryBuilder
