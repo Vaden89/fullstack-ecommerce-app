@@ -3,7 +3,8 @@ import { CircleUserRound, Menu, Search, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { ProfileButton } from "./profile-btn";
-import { DesktopSearchComponent } from "./common/product-search-input";
+import { ProductSearchInput } from "./common/product-search-input";
+import { MobileMenu } from "./common/mobile-menu";
 
 export const Navbar = async () => {
   const session = await auth();
@@ -12,38 +13,12 @@ export const Navbar = async () => {
 
   return (
     <nav className="w-full h-20 flex items-center justify-between p-4 sm:px-14 bg-white gap-5">
-      <div className="flex gap-2 items-center">
-        <button className="sm:hidden" aria-label="Open Menu">
-          <Menu className="w-6 h-6" />
-        </button>
-        <Link href={"/"}>
-          <span className="font-bold text-2xl sm:text-4xl">SHOP.CO</span>
-        </Link>
-      </div>
+      <Link href={"/"} className="hidden sm:flex">
+        <span className="font-bold text-2xl sm:text-4xl">SHOP.CO</span>
+      </Link>
       <MobileMenu isLoggedIn={isLoggedIn} />
       <DesktopMenu isLoggedIn={isLoggedIn} />
     </nav>
-  );
-};
-
-const MobileMenu = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
-  return (
-    <div className="flex gap-3 items-center sm:hidden">
-      <button aria-label="Search">
-        <Search className="w-6 h-6" strokeWidth={2.5} />
-      </button>
-
-      <button aria-label="View Shopping Cart">
-        <ShoppingCart strokeWidth={2.5} className="w-6 h-6" />
-      </button>
-      {isLoggedIn ? (
-        <ProfileButton />
-      ) : (
-        <Link href={"/login"}>
-          <Button>Login</Button>
-        </Link>
-      )}
-    </div>
   );
 };
 
@@ -54,7 +29,7 @@ const DesktopMenu = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
       <button>On Sale</button>
       <button>New Arrivals</button>
       <button>Brands</button>
-      <DesktopSearchComponent />
+      <ProductSearchInput />
       <button aria-label="View Shopping Cart">
         <ShoppingCart strokeWidth={2.5} className="w-6 h-6" />
       </button>

@@ -64,7 +64,7 @@ export const ProductSearchInput = () => {
             <div className="w-full h-full flex flex-col justify-center items-center">
               <MiniLoader />
             </div>
-          ) : productData.length > 20 ? (
+          ) : productData.length > 0 ? (
             productData.map((item) => {
               return (
                 <div
