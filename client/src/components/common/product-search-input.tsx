@@ -1,11 +1,11 @@
 "use client";
 import { getProductAction } from "@/action/product";
-import { LayoutTemplate, Search } from "lucide-react";
+import { ArrowUpRight, LayoutTemplate, Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import { MiniLoader } from "../Loader";
 
-export const DesktopSearchComponent = () => {
+export const ProductSearchInput = () => {
   const [searchField, setSearchField] = useState("");
   const [suggestionsOpen, setSuggestionsOpen] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -43,16 +43,10 @@ export const DesktopSearchComponent = () => {
 
   const productData = data?.data ?? [];
 
-  console.log(productData);
-
-  // When you click on the search field and start typing I want a modal to be displayed with search results.
-  // But when you click outside the search field, I want the modal to close.
-  // When you type a search query, I want to make an API call with the search results
-
   return (
     <div
       ref={containerRef}
-      className="w-1/2 2xl:w-1/3 h-11 px-4 flex rounded-full items-center gap-2 bg-[#F0F0F0] relative"
+      className="w-full sm:w-1/2 2xl:w-1/3 h-11 px-4 flex rounded-full items-center gap-2 bg-[#F0F0F0] relative"
     >
       <Search className="w-6 h-6 text-gray-500" strokeWidth={2.5} />
       <input
@@ -64,16 +58,31 @@ export const DesktopSearchComponent = () => {
         onFocus={() => setSuggestionsOpen(true)}
         onChange={(e) => setSearchField(e.target.value)}
       />
-      {debouncedQuery && suggestionsOpen && (
-        <div className="absolute z-40 left-0 top-full mt-1 rounded-xl w-full min-h-40 bg-white shadow-md p-4 flex flex-col items-center justify-center">
+      {searchField && suggestionsOpen && (
+        <div className="absolute z-40 left-0 top-full mt-2 sm:mt-1 rounded-xl w-full min-h-40 h-full bg-[#f0f0f0] shadow-md p-4 flex flex-col">
           {isLoading ? (
-            <MiniLoader />
-          ) : productData.length > 0 ? (
+            <div className="w-full h-full flex flex-col justify-center items-center">
+              <MiniLoader />
+            </div>
+          ) : productData.length > 20 ? (
             productData.map((item) => {
-              return <div key={item.id}>Hello</div>;
+              return (
+                <div
+                  className="w-full h-10 cursor-pointer hover:bg-gray-100 px-2 flex gap-2 items-center justify-between rounded-md"
+                  key={item.id}
+                >
+                  <div className="flex flex-col">
+                    <span>{item.name}</span>
+                    <span className="text-xs text-gray-400">
+                      {item.description}
+                    </span>
+                  </div>
+                  <ArrowUpRight color="gray" />
+                </div>
+              );
             })
           ) : (
-            <div className="flex flex-col items-center text-gray-400">
+            <div className="h-full flex flex-col items-center justify-center text-gray-400">
               <LayoutTemplate />
               <span>No results found</span>
             </div>
