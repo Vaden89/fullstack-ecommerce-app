@@ -61,7 +61,7 @@ export const ProductDescription = ({ product }: { product: Product }) => {
             <Plus />
           </button>
         </div>
-        <CustomButton className="w-2/3 h-14 bg-black rounded-full">
+        <CustomButton className="w-2/3 h-14 bg-black hover:bg-black rounded-full">
           Add to Cart
         </CustomButton>
       </div>
