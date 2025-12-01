@@ -6,14 +6,9 @@ import { Minus, Plus } from "lucide-react";
 import { CustomButton } from "../common/button";
 
 export const ProductDescription = ({ product }: { product: Product }) => {
+  const sizeOptions = ["small", "medium", "large", "x-Large"];
   const [selectedSize, setSelectedSize] = useState("large");
   const [selectedQuantity, setSelectedQuantity] = useState(1);
-  const [sizeOptions, setSizeOptions] = useState([
-    "small",
-    "medium",
-    "large",
-    "x-Large",
-  ]);
 
   return (
     <div className="w-full sm:w-1/2 flex flex-col font-satoshi gap-4">
@@ -37,7 +32,8 @@ export const ProductDescription = ({ product }: { product: Product }) => {
           {sizeOptions.map((item, index) => {
             return (
               <button
-                className="p-2 px-4 rounded-full bg-[#f0f0f0] text-[#00000060]"
+                onClick={() => setSelectedSize(item)}
+                className={`p-2 px-4 rounded-full ${item === selectedSize ? "bg-black font-semibold text-white" : "bg-[#f0f0f0] text-[#00000060]"}`}
                 key={index}
               >
                 {capitalizeFirstLetter(item)}
