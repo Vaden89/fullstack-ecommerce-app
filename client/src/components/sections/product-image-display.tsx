@@ -27,7 +27,7 @@ export const ProductImageDisplay = ({ images }: { images: string[] }) => {
         height={500}
         alt="Product Image"
         src={images[imageIndex]}
-        className="w-full aspect-auto border rounded-xl"
+        className="w-full sm:w-3/5 aspect-auto border rounded-xl"
       />
     </div>
   );
