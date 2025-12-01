@@ -21,7 +21,7 @@ export async function ProductDisplaySection({
       <span className="text-sm text-[#00000060]">
         Home &gt; Shop &gt; Product Details
       </span>
-      <div className="w-full flex gap-4">
+      <div className="w-full flex flex-col sm:flex-row gap-4">
         <ProductImageDisplay images={product.imageUrls} />
         <ProductDescription product={product} />
       </div>

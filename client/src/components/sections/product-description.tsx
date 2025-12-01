@@ -16,15 +16,17 @@ export const ProductDescription = ({ product }: { product: Product }) => {
   ]);
 
   return (
-    <div className="w-1/2 flex flex-col font-satoshi gap-4">
+    <div className="w-full sm:w-1/2 flex flex-col font-satoshi gap-4">
       <div className="flex flex-col">
-        <span className="text-[40px] font-integral font-bold">
+        <span className="text-2xl leading-7 sm:leading-none sm:text-[40px] font-integral font-bold">
           {product.name}
         </span>
         <span className="text-[32px] font-bold ">
           ₦{Number(product.price).toLocaleString()}
         </span>
-        <p className="text-[#00000060]">{product.description}</p>
+        <p className="text-sm sm:text-normal text-[#00000060]">
+          {product.description}
+        </p>
       </div>
 
       <hr />
