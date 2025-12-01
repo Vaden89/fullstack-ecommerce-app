@@ -16,6 +16,7 @@ export const ProductImageDisplay = ({ images }: { images: string[] }) => {
               height={150}
               key={index}
               alt={`product Image ${index + 1}`}
+              onClick={() => setImageIndex(index)}
               className="w-1/3 sm:w-full sm:h-1/3 border-2 rounded-xl"
             />
           );
