@@ -163,39 +163,49 @@ export const getProductAction = async (
         error.response?.data.message ?? "Unexpected Error occurred";
     }
 
-    console.log(errorMessage);
-
     throw new Error(errorMessage);
   }
 };
 
 export const deleteProductAction = async (_: any, formData: FormData) => {
-  const session = await auth();
-  const authToken = session?.user?.access_token ?? "";
+  try {
+    const session = await auth();
+    const authToken = session?.user?.access_token ?? "";
 
-  const productId = formData.get("id") as string;
+    const productId = formData.get("id") as string;
 
-  if (typeof productId != "string" || productId) {
+    if (typeof productId !== "string" || !productId) {
+      return {
+        error: "Product Id is missing or invalid.",
+        message: "Could not delete product",
+      } as ErrorResponse;
+    }
+
+    const url = `/admin/products/${productId}`;
+    const response = await axiosDelete<SuccessResponse<null>>(url, {
+      config: {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      },
+    });
+
+    if (!("data" in response)) {
+      return response as ErrorResponse;
+    }
+
+    return response;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string; error: string }>;
+
+    const errorMessage =
+      error.response?.data.message ?? "Unexpected Error occurred";
+
     return {
-      error: "Product Id is missing or invalid.",
+      error: errorMessage,
       message: "Could not delete product",
     } as ErrorResponse;
   }
-
-  const url = `/admin/products/${productId}`;
-  const response = await axiosDelete<SuccessResponse<null>>(url, {
-    config: {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    },
-  });
-
-  if (!("data" in response)) {
-    return response as ErrorResponse;
-  }
-
-  return response;
 };
 
 export const getTopSellingProducts = async () => {
@@ -211,5 +221,34 @@ export const getTopSellingProducts = async () => {
   } catch (error) {
     // Throw a meaning full error that can be handled by swt
     throw error;
+  }
+};
+
+export const getProductByIdAction = async (productId: string) => {
+  try {
+    const url = `/products/${productId}`;
+
+    const response = await axiosGet<Response<Product>>(url);
+
+    if ("data" in response) {
+      return response.data as Product;
+    }
+
+    return response as ErrorResponse;
+  } catch (err) {
+    const error = err as AxiosError<{ message: string; error: string }>;
+
+    let errorMessage = "";
+
+    if (!error.response) {
+      errorMessage = "Unable to reach server, try again later.";
+    } else {
+      errorMessage =
+        error.response?.data.message ?? "Unexpected Error occurred";
+    }
+
+    return {
+      error: errorMessage,
+    } as ErrorResponse;
   }
 };

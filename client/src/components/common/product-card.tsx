@@ -1,10 +1,14 @@
 import { Product } from "@/types/product";
 import { CameraOff } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export const ProductCard = ({ product }: { product: Product }) => {
   return (
-    <div className="sm:w-full flex flex-col gap-4">
+    <Link
+      href={`/products/${product.id}`}
+      className="sm:w-full flex flex-col gap-4"
+    >
       <div className="relative w-full aspect-square border rounded-lg">
         {product.imageUrls[0] ? (
           <Image
@@ -29,6 +33,6 @@ export const ProductCard = ({ product }: { product: Product }) => {
           })}
         </span>
       </div>
-    </div>
+    </Link>
   );
 };
