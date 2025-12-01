@@ -174,7 +174,7 @@ export const deleteProductAction = async (_: any, formData: FormData) => {
 
     const productId = formData.get("id") as string;
 
-    if (typeof productId != "string" || productId) {
+    if (typeof productId !== "string" || !productId) {
       return {
         error: "Product Id is missing or invalid.",
         message: "Could not delete product",
@@ -201,7 +201,10 @@ export const deleteProductAction = async (_: any, formData: FormData) => {
     const errorMessage =
       error.response?.data.message ?? "Unexpected Error occurred";
 
-    throw new Error(errorMessage);
+    return {
+      error: errorMessage,
+      message: "Could not delete product",
+    } as ErrorResponse;
   }
 };
 
