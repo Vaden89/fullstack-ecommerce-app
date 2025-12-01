@@ -23,7 +23,7 @@ export class ProductsService {
       throw new CustomHttpException('Product not found', HttpStatus.NOT_FOUND);
     }
 
-    return { product };
+    return product;
   }
 
   async getProducts({ limit, page }: PaginationDTO, query: string) {
